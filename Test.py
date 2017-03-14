@@ -23,11 +23,13 @@ def get_ecc_and_din_indexes_from_verilog(verilog):
 
     return result_dict
 
-class PageTree:
-    def __init__(self):
-        pages = set()
+from enum import Enum
 
-    def __repr__(self):
-        return (self.__class__.__name__)
+class MemoryType(Enum):
+    WithEcc = 0
+    WithoutEcc = 1
 
-print(PageTree())
+
+
+t = MemoryType.W
+print(t.WithEcc)

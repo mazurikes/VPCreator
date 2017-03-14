@@ -10,11 +10,26 @@ class Page(QObject):
         super().__init__()
         self.ui = ui
 
+        self.connect_signals()
+
     def prepare_to_open(self):
-        raise NotImplementedError('prepare_to_open() not implement in {}'.format(self))
+        self.prepare_ui()
+
+    def connect_signals(self):
+        pass
 
     def __repr__(self):
-        return self.__name__
+        return self.__class__.__name__
+
+    def prepare_ui(self):
+        self.ui.pushButton_next.setVisible(True)
+        self.ui.pushButton_previous.setVisible(True)
+        self.ui.pushButton_next.setEnabled(False)
+
+    def fill(self):
+        pass
+
+
 
 
 

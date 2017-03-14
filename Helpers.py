@@ -1,4 +1,15 @@
 import os
+from enum import Enum
+
+
+class MemoryType(Enum):
+    WithEcc = 0
+    WithoutEcc = 1
+
+
+colors = {'wrong': 'red',
+          'empty': 'yellow',
+          'correct': 'white'}
 
 
 def singleton(cls):

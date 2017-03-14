@@ -1,16 +1,22 @@
 from PyQt5 import uic
 from enum import Enum
-from collections import OrderedDict
 from PyQt5.QtWidgets import *
 
-from Exceptions import WrongPageName
 from StartPage import StartPage
-from MainPage import MainPage
-from ResultPage import Result
+from SelectFilePage import SelectFilePage
+from MemoryTypePage import MemoryTypePage
+from WithoutEccPage import WithoutEccPage
+from EccAdressPage import EccAdressPage
+from BanksTypePage import BanksTypePage
+from JointBanksPage import JointBanksPage
+from SeparatedBanksPage import SeparatedBanksPage
+from ResultPage import ResultPage
+
 from Helpers import singleton
 from Logger import log
 
-UI_PATH = 'ui\\main.ui'
+UI_PATH = 'ui\\main_1203.ui'
+
 
 class Page(Enum):
     page_1 = 1
@@ -24,7 +30,7 @@ class PageManager(QMainWindow):
         super().__init__()
 
         self.ui = self.initUi()
-        self.ui.setWindowTitle('Hex Splitter')
+        self.ui.setWindowTitle('VPCreator')
         self.init_pages()
         self.pages = (
             self.Start,
@@ -40,7 +46,7 @@ class PageManager(QMainWindow):
         self.connect_signals()
 
         self.open_page(self.Start)
-        self.__current_page = None
+        self.__current_page = self.Start
 
     def initUi(self):
         return uic.loadUi(UI_PATH, self)
@@ -60,6 +66,8 @@ class PageManager(QMainWindow):
         for page in self.pages:
             page.open_next.connect(self.open_next)
             page.open_previous.connect(self.open_previous)
+        self.ui.pushButton_next.clicked.connect(self.open_next)
+        self.ui.pushButton_previous.clicked.connect(self.open_previous)
 
     def open_next(self):
         self.open_page(self.get_next_after(self.current_page))
@@ -123,7 +131,7 @@ class PageManager(QMainWindow):
 
     @property
     def current_page(self):
-        return self.__current_index
+        return self.__current_page
 
     @current_page.setter
     def current_page(self, page):

@@ -6,13 +6,12 @@ from Page import Page
 class StartPage(Page):
 
     def __init__(self, ui):
-        super().__init__()
-
-        self.ui = ui
-        self.connect_signals()
+        super().__init__(ui)
 
     def connect_signals(self):
-        self.ui.pushButton_start.clicked.connect(self.open_page_main)
+        self.ui.pushButton_start.clicked.connect(lambda: self.open_next.emit())
 
-    def open_page_main(self):
-        self.open_page.emit('Main')
+    def prepare_ui(self):
+        self.ui.pushButton_next.setVisible(False)
+        self.ui.pushButton_previous.setVisible(False)
+
