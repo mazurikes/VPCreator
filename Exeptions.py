@@ -1,0 +1,2 @@
+class WrongPageName(Exception):
+    pass
