@@ -15,4 +15,4 @@ class StartPage(Page):
         self.ui.pushButton_start.clicked.connect(self.open_page_main)
 
     def open_page_main(self):
-        self.open_next.emit()
+        self.open_page.emit('Main')

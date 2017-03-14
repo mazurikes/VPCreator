@@ -1,8 +1,8 @@
 from Page import Page
-from SplitHex import get_split_file_path
+from HexSplitter import get_split_file_path
 
 
-class SucsessPage(Page):
+class Result(Page):
 
     def __init__(self, ui):
         super().__init__()
@@ -24,7 +24,8 @@ class SucsessPage(Page):
     def set_label(self):
         if self.path_dict:
             self.ui.label_process_info.setText('{} was splitted.'
-                                           '\nClick button to open folder with files'.format(self.path_dict['file_name']))
+                                               '\nClick button to open folder with files'.
+                                               format(self.path_dict['file_name']))
 
     def open_split_files_folder(self):
         path = str(self.path_dict['directory']).replace('/', '\\')

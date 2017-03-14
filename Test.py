@@ -1,19 +1,33 @@
-duty_cyrcle = (0.39, 0.7, 0.4, 0.21, 0.99, 0.03, 0.08)
+#!/usr/bin/env python
+from re import findall
 
-number_of_clk_part = [num * 32 for num in duty_cyrcle]
+def get_ecc_and_din_indexes_from_line(verilog_line):
 
-for item in range(len(duty_cyrcle)):
-    print('Duty cycle={}    |Width of pulse={}'.format(duty_cyrcle[item]*100, number_of_clk_part[item]))
+    ecc_index = findall('ECC\[(\d+)\]', verilog_line)[0]
 
+    range_from_string = [int(i) for i in list(findall('\d+:\d+', verilog_line)[0].replace(':', ''))]
+    din_range = tuple([i for i in range(range_from_string[1], range_from_string[0] + 1)])
 
-print('-' * 10)
+    other_digitals = tuple([int(i) for i in findall('DIN\[(\d+)\]', verilog_line)])
 
-for i in range(1, 33):
-    print('{}/32={}%'.format(i, i / 32*100))
+    all_array = din_range + other_digitals
 
-print('-' * 10)
+    return int(ecc_index), all_array
 
-out_pulse_width = (13, 22, 13, 7, 32, 1, 3)
+def get_ecc_and_din_indexes_from_verilog(verilog):
+    result_dict = {}
+    for line in verilog.splitlines():
+        if 'assign ECC' in line:
+            ecc_num, index_list = get_ecc_and_din_indexes_from_line(line)
+            result_dict[ecc_num] = index_list
 
-for i, item in enumerate(out_pulse_width):
-    print('out[{0}]={1}={2}'.format(i, item, bin(item)))
+    return result_dict
+
+class PageTree:
+    def __init__(self):
+        pages = set()
+
+    def __repr__(self):
+        return (self.__class__.__name__)
+
+print(PageTree())

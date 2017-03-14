@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="ok">
-    <file>ok.png</file>
-  </qresource>
-  <qresource prefix="ok_green">
-    <file>ok_green.png</file>
-  </qresource>
-</RCC>

@@ -1,6 +1,5 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QStyleFactory
-from PyQt5 import QtCore
 
 from PageManager import PageManager
 

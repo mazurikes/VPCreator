@@ -1,45 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os.path
+from Helpers import get_split_file_path, get_file_content
 
 SIZE_OF_ONE_HEX_CHARACTER_IN_BITS = 4
 
 
-def get_split_file_path(file):
-    """
-    File example: L:\\Документы\\Python_projects\\Practice\\test_files\\ER_IROM1.vh
-
-    :return: {
-    'directory':'L:\\Документы\\Python_projects\\Practice\\test_files\\',
-    'file_name':'ER_IROM1',
-    'extention':''
-    }
-
+class HexSplitter:
     """
 
-    if os.path.isfile(file):
-        directory, file_name_with_extention = os.path.split(file)
-        file_name_without_extention, extention = os.path.splitext(file_name_with_extention)
-        return {'directory': directory,
-                'file_name': file_name_without_extention,
-                'extention': extention}
-    else:
-        raise FileExistsError('File {0} not found'.format(file))
-
-
-def get_file_content(file):
-    if os.path.isfile(file):
-        with open(file, 'r', encoding='UTF-8') as f:
-            file_output = [line.replace('\n', '') for line in f]
-        return file_output
-    else:
-        raise FileExistsError('File {0} not found'.format(file))
-
-
-class Hex:
-    """
-    It Split input file
-
+    Parses input file and splits it.
     """
 
     def __init__(self, input_file=None, bits_number=32, banks_number=1, ECC_information=None):
@@ -51,8 +21,10 @@ class Hex:
         self.split_files_path = ''
         self.default_ext = '.vh'
 
+        self.split()
+
     def split(self):
-        self.__create_hexs_files()
+        self.__create_empty_hex_files()
         self.__write_split_hex_files()
 
     def __get_size_of_one_string(self):
@@ -92,9 +64,10 @@ class Hex:
         string_number = 0
         self.__set_finished_output()
         list_of_files = []
+        list_dir = os.listdir(self.split_files_path)
         file_number = 0
 
-        for file in os.listdir(self.split_files_path):
+        for file in list_dir:
             list_of_files.append(open(self.split_files_path+file, 'w', encoding='UTF-8'))
 
         for index, value in enumerate(self.finished_output):
@@ -117,10 +90,12 @@ class Hex:
         for file in list_of_files:
             file.close()
 
-    def __create_hexs_files(self):
+    def __create_empty_hex_files(self):
         """
-        Create (banks_number) hex empty files
+
+        Create (banks_number) empty hex files
         """
+
         file_path_list = get_split_file_path(self.input_file)
         if not os.path.exists((file_path_list['directory']+'\\Split hex files')):
             os.mkdir(file_path_list['directory']+'\\Split hex files')
@@ -138,12 +113,12 @@ class Hex:
             with open(full_name, 'w') as f:
                 print('File {0} is created'.format(full_name))
         print('All files was created')
-        self.split_files_path = file_path_list['directory']+'/Split hex files/'
+        self.split_files_path = file_path_list['directory']+'\\Split hex files\\'
 
 
 if __name__ == '__main__':
     input_file = 'L:\\Документы\\Python_projects\\Practice\\test_files\\ER_IROM1'
-    obj = Hex(input_file, 32, 4)
+    obj = HexSplitter(input_file, 32, 4)
     # file_output = obj.get_file_output()
     # print(file_output)
     # print(len(file_output))

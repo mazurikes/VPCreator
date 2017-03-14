@@ -62,13 +62,6 @@ QLabel{
 }
 
 
-#pushButton_create::disabled{
-color: rgb(225, 225, 225);
-	
-	background-color: rgb(255, 85, 0);
-
-}
-
 QPushButton{
 	 background-color: rgb(236, 224, 208);
 	 color: rgb(23, 54, 76);
@@ -80,7 +73,6 @@ QPushButton{
 QPushButton:pressed{
 	 background-color:#dbe3f6 ;
 }
-
 
 QGroupBox {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -132,9 +124,6 @@ QLineEdit::disabled{
 	background-color:rgb(197, 219, 248);
 }
 
-QPushButton::disabled{
-	background-color:rgb(197, 219, 248);
-}
 
 </string>
    </property>

@@ -1,13 +1,16 @@
 from PyQt5 import uic
 from enum import Enum
+from collections import OrderedDict
 from PyQt5.QtWidgets import *
 
-from Exeptions import WrongPageName
+from Exceptions import WrongPageName
 from StartPage import StartPage
 from MainPage import MainPage
-from SucsessPage import SucsessPage
+from ResultPage import Result
 from Helpers import singleton
+from Logger import log
 
+UI_PATH = 'ui\\main.ui'
 
 class Page(Enum):
     page_1 = 1
@@ -20,63 +23,109 @@ class PageManager(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.initUi()
-        self.all_ui.setWindowTitle('Hex Splitter')
+        self.ui = self.initUi()
+        self.ui.setWindowTitle('Hex Splitter')
         self.init_pages()
+        self.pages = (
+            self.Start,
+            self.SelectFile,
+            self.MemoryType,
+            self.WithoutECC,
+            self.EccAdress,
+            self.BanksType,
+            self.SeparatedBanks,
+            self.JointBanks,
+            self.Result
+        )
         self.connect_signals()
 
-        self.open_page('Start')
+        self.open_page(self.Start)
+        self.__current_page = None
 
     def initUi(self):
-        self.all_ui = uic.loadUi('ui//new_main.ui', self)
+        return uic.loadUi(UI_PATH, self)
 
     def init_pages(self):
-        self.Start = StartPage(self.all_ui)
-        self.Main = MainPage(self.all_ui)
-        self.Sucsess = SucsessPage(self.all_ui)
+        self.Start = StartPage(self.ui)
+        self.SelectFile = SelectFilePage(self.ui)
+        self.MemoryType = MemoryTypePage(self.ui)
+        self.WithoutECC = WithoutEccPage(self.ui)
+        self.EccAdress = EccAdressPage(self.ui)
+        self.BanksType = BanksTypePage(self.ui)
+        self.JointBanks = JointBanksPage(self.ui)
+        self.SeparatedBanks = SeparatedBanksPage(self.ui)
+        self.Result = ResultPage(self.ui)
 
     def connect_signals(self):
-        self.Start.open_next.connect(self.set_next)
-        self.Main.open_page.connect(self.open_page)
-        self.Sucsess.open_page.connect(self.open_page)
-        self.Sucsess.reset.connect(self.reset)
+        for page in self.pages:
+            page.open_next.connect(self.open_next)
+            page.open_previous.connect(self.open_previous)
 
-    def get_ui(self, class_object):
-        self.page_name = class_object.__class__.__name__
+    def open_next(self):
+        self.open_page(self.get_next_after(self.current_page))
 
-        if self.page_name:
-            if self.page_name == 'StartWindow':
-                return self.all_ui.page_1
-            elif self.page_name == 'MainWindow':
-                return self.all_ui.page_2
-            elif self.page_name == 'SucsessWindow':
-                return self.all_ui.page_3
-        raise WrongPageName('Wrong page: {}'.format(self.page_name))
+    def open_previous(self):
+        self.open_page(self.get_previous_before(self.current_page))
 
     def open_page(self, page):
+        try:
+            page.prepare_to_open()
+            self.ui.stackedWidget.setCurrentIndex(self.pages.index(page))
+            self.current_page = page
+        except Exception as e:
+            log.error(e, show_caller=True)
 
-        # self.reset_info()
-
-        if page == 'Start':
-            self.all_ui.stackedWidget.setCurrentIndex(0)
-        elif page == 'Main':
-            self.all_ui.stackedWidget.setCurrentIndex(1)
-        elif page == 'Sucsess':
-            self.all_ui.stackedWidget.setCurrentIndex(2)
-            self.Sucsess.late_init(self.Main.file_path)
+    def get_next_after(self, page):
+        if page == self.Start:
+            return self.SelectFile
+        elif page == self.SelectFile:
+            return self.MemoryType
+        elif page == self.MemoryType:
+            return self.WithoutECC if self.MemoryType.type == self.MemoryType.Type.With else self.EccAdress
+        elif page == self.WithoutECC:
+            return self.Result
+        elif page == self.EccAdress:
+            return self.BanksType
+        elif page == self.BanksType:
+            return self.JointBanks if self.BanksType.type == self.BanksType.Type.Joint else self.SeparatedBanks
+        elif page == self.JointBanks:
+            return self.Result
+        elif page == self.SeparatedBanks:
+            return self.Result
+        elif page == self.Result:
+            return self.SelectFile
         else:
-            raise NameError('Wrong page name: \"{}\"'.format(page))
+            log.error('Unknown page: {}'.format(page))
+            return page
 
-    def reset(self):
-        # add reset of other lines
-        self.all_ui.lineEdit_hex_file.setText('')
+    def get_previous_before(self, page):
+        if page == self.Start:
+            return page
+        elif page == self.SelectFile:
+            return self.Start
+        elif page == self.MemoryType:
+            return self.SelectFile
+        elif page == self.WithoutECC:
+            return self.MemoryType
+        elif page == self.EccAdress:
+            return self.MemoryType
+        elif page == self.BanksType:
+            return self.EccAdress
+        elif page == self.JointBanks:
+            return self.BanksType
+        elif page == self.SeparatedBanks:
+            return self.BanksType
+        elif page == self.Result:
+            return page
+        else:
+            log.error('Unknown page: {}'.format(page))
+            return page
 
-    def set_next(self):
-        last_index = self.all_ui.stackedWidget.currentIndex()
-        if last_index < self.all_ui.stackedWidget.count():
-            self.all_ui.stackedWidget.setCurrentIndex(last_index + 1)
+    @property
+    def current_page(self):
+        return self.__current_index
 
-    def set_previous(self):
-        last_index = self.all_ui.stackedWidget.currentIndex()
-        if last_index:
-            self.all_ui.stackedWidget.setCurrentIndex(last_index - 1)
+    @current_page.setter
+    def current_page(self, page):
+        self.__current_page = page
+        log.info('Current page is {}'.format(page))
