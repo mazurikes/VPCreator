@@ -1,2 +1,0 @@
-# VPCreator
-Verification Patterns Creator
