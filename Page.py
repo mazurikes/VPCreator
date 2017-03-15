@@ -24,7 +24,6 @@ class Page(QObject):
     def prepare_ui(self):
         self.ui.pushButton_next.setVisible(True)
         self.ui.pushButton_previous.setVisible(True)
-        self.ui.pushButton_next.setEnabled(False)
 
     def fill(self):
         pass

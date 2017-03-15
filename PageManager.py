@@ -14,6 +14,7 @@ from ResultPage import ResultPage
 
 from Helpers import singleton
 from Logger import log
+from DataStorage import DataStorage
 
 UI_PATH = 'ui\\main_1203.ui'
 
@@ -29,6 +30,7 @@ class PageManager(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        DataStorage()
         self.ui = self.initUi()
         self.ui.setWindowTitle('VPCreator')
         self.init_pages()

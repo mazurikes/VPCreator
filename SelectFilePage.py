@@ -9,17 +9,20 @@ from DataStorage import DataStorage
 DEFAULT_DIR = 'l:\\Документы\\test_files'
 
 
-@singleton
 class SelectFilePage(Page):
 
     def __init__(self, ui):
         super().__init__(ui)
-        self.__file_path = None
+        self._file_path = None
         self.ui.lineEdit_file.setStyleSheet("border: 2px solid {};".format(colors['empty']))
 
     def connect_signals(self):
         self.ui.pushButton_open.clicked.connect(self.select_file)
         self.ui.lineEdit_file.textChanged.connect(self.set_path)
+
+    def prepare_to_open(self):
+        super().prepare_to_open()
+        self.ui.pushButton_next.setEnabled(bool(self._file_path))
 
     def select_file(self):
         file_path = QFileDialog.getOpenFileName(None, 'Open ER_IPROM1 file', DEFAULT_DIR)[0]
@@ -41,15 +44,17 @@ class SelectFilePage(Page):
         self.ui.lineEdit_file.setStyleSheet("border: 2px solid {};".format(color))
 
     def check_path(self, path):
+        if path is None:
+            return False
         pattern = r'.*/(ER_IROM1)$'
         return bool(findall(pattern, path))
 
     @property
     def file_path(self):
-        return self.__file_path
+        return self._file_path
 
     @file_path.setter
     def file_path(self, path):
-        self.__file_path = path
-        DataStorage().file_path = self.__file_path
-        self.ui.pushButton_next.setEnabled(bool(self.__file_path))
+        self._file_path = path
+        DataStorage().file_path = self._file_path
+        self.ui.pushButton_next.setEnabled(bool(self._file_path))

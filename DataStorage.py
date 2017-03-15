@@ -1,8 +1,8 @@
-from Helpers import singleton, get_split_file_path
+from Helpers import Singleton, get_split_file_path
 from Logger import log
 
-@singleton
-class DataStorage:
+
+class DataStorage(metaclass=Singleton):
     def __init__(self):
         self.__file_path = None
         self.file_dir = None
@@ -34,8 +34,13 @@ class DataStorage:
     @file_path.setter
     def file_path(self, path):
         self.__file_path = path
-        split_path = get_split_file_path(self.__file_path)
-        self.file_dir = split_path['directory']
-        self.file_name = split_path['file_name']
-        self.file_extension = split_path['extention']
+        if self.__file_path:
+            split_path = get_split_file_path(self.__file_path)
+            self.file_dir = split_path['directory']
+            self.file_name = split_path['file_name']
+            self.file_extension = split_path['extention']
+        else:
+            self.file_dir = None
+            self.file_name = None
+            self.file_extension = None
 

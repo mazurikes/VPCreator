@@ -2,7 +2,6 @@ from Helpers import singleton
 from Page import Page
 
 
-@singleton
 class StartPage(Page):
 
     def __init__(self, ui):
