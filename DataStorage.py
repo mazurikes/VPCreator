@@ -1,4 +1,4 @@
-from Helpers import Singleton, get_split_file_path
+from Helpers import Singleton, get_split_file_path, MemoryType
 from Logger import log
 
 
@@ -9,7 +9,7 @@ class DataStorage(metaclass=Singleton):
         self.file_name = None
         self.file_extension = None
 
-        self.memory_type = None
+        self.memory_type = MemoryType.WithoutEcc
 
         self.start_ecc_address = None
         self.banks_type = None

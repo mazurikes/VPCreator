@@ -16,7 +16,7 @@ class MemoryTypePage(Page):
         self.ui.radioButton_ecc_off.toggled.connect(self.set_state)
 
     def set_state(self, state):  # check using radioButton ecc_off
-        DataStorage.memory_type = MemoryType.WithoutEcc if state else MemoryType.WithEcc
+        DataStorage().memory_type = MemoryType.WithoutEcc if state else MemoryType.WithEcc
 
 
 

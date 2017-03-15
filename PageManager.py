@@ -12,7 +12,7 @@ from JointBanksPage import JointBanksPage
 from SeparatedBanksPage import SeparatedBanksPage
 from ResultPage import ResultPage
 
-from Helpers import singleton
+from Helpers import singleton, MemoryType
 from Logger import log
 from DataStorage import DataStorage
 
@@ -91,7 +91,7 @@ class PageManager(QMainWindow):
         elif page == self.SelectFile:
             return self.MemoryType
         elif page == self.MemoryType:
-            return self.WithoutECC if self.MemoryType.type == self.MemoryType.Type.With else self.EccAdress
+            return self.WithoutECC if DataStorage().memory_type == MemoryType.WithoutEcc else self.EccAdress
         elif page == self.WithoutECC:
             return self.Result
         elif page == self.EccAdress:
