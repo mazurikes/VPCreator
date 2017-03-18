@@ -3,7 +3,7 @@ import os
 from re import findall
 
 from Page import Page
-from HexSplitter import HexSplitter
+from Splitter import Splitter
 from Helpers import singleton
 from ECC import ECC
 
@@ -54,7 +54,7 @@ class MainPage(Page):
             if self.ui.checkBox_ECC.isChecked():
                 ECC(file=self.file_path)
 
-            HexSplitter(self.file_path, bits_number, banks_number)
+            Splitter(self.file_path, bits_number, banks_number)
 
             print(self.file_path)
             self.open_page.emit('Sucsess')

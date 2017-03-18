@@ -6,7 +6,7 @@ from Page import Page
 from DataStorage import DataStorage
 
 
-DEFAULT_DIR = 'l:\\Документы\\test_files'
+DEFAULT_DIR = 'l:/Документы/test_files'
 
 
 class SelectFilePage(Page):
@@ -22,15 +22,15 @@ class SelectFilePage(Page):
 
     def prepare_to_open(self):
         super().prepare_to_open()
+        self.ui.lineEdit_file.setText('L:/Документы/test_files/ER_IROM1')
         self.ui.pushButton_next.setEnabled(bool(self._file_path))
 
     def select_file(self):
-        file_path = QFileDialog.getOpenFileName(None, 'Open ER_IPROM1 file', DEFAULT_DIR)[0]
+        file_path = QFileDialog.getOpenFileName(None, 'Open ER_IROM1 file', DEFAULT_DIR)[0]
         if file_path:
             self.ui.lineEdit_file.setText(file_path)
 
     def set_path(self, path):
-
         if self.check_path(path):
             color = colors['correct']
             self.file_path = path

@@ -6,7 +6,7 @@ from Helpers import get_split_file_path, get_file_content
 SIZE_OF_ONE_HEX_CHARACTER_IN_BITS = 4
 
 
-class HexSplitter:
+class Splitter:
     """
 
     Parses input file and splits it.
@@ -118,7 +118,7 @@ class HexSplitter:
 
 if __name__ == '__main__':
     input_file = 'L:\\Документы\\Python_projects\\Practice\\test_files\\ER_IROM1'
-    obj = HexSplitter(input_file, 32, 4)
+    obj = Splitter(input_file, 32, 4)
     # file_output = obj.get_file_output()
     # print(file_output)
     # print(len(file_output))

@@ -9,6 +9,11 @@ class DataStorage(metaclass=Singleton):
         self.file_name = None
         self.file_extension = None
 
+        # Without ecc
+        self.data_banks_number = None
+        self.data_bits = None
+        self.data_rarefaction = None
+
         self.memory_type = MemoryType.WithoutEcc
 
         self.start_ecc_address = None
@@ -24,7 +29,7 @@ class DataStorage(metaclass=Singleton):
             self.__setattr__(var, None)
 
     def __setattr__(self, key, value):
-        log.info('DataStorage\'s "{}" changed to "{}"'.format(key, value))
+        log.info('DataStorage\'s "{}" changed to {} {}'.format(key, type(value), value))
         super().__setattr__(key, value)
 
     @property
