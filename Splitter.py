@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os.path
-from Helpers import get_split_file_path, get_file_content
+from Helpers import get_split_file_path, get_file_content, MemoryType
+from DataStorage import DataStorage
+from Logger import log
 
 SIZE_OF_ONE_HEX_CHARACTER_IN_BITS = 4
+NAME_OF_SPLIT_FILES_DIRECTORY = 'VPCreator'
 
 
 class Splitter:
@@ -12,10 +15,17 @@ class Splitter:
     Parses input file and splits it.
     """
 
-    def __init__(self, input_file=None, bits_number=32, banks_number=1, ECC_information=None):
-        self.input_file = input_file
-        self.bits_number = int(bits_number)
-        self.banks_number = int(banks_number)
+    def __init__(self):
+        if DataStorage().memory_type == MemoryType.WithoutEcc:
+            self.input_file = DataStorage().file_path
+            self.file_name = DataStorage().file_name
+            self.file_dir = DataStorage().file_dir
+            self.splitted_files_directory = os.path.join(self.file_dir, NAME_OF_SPLIT_FILES_DIRECTORY)
+
+            self.bits_number = DataStorage().data_bits
+            self.banks_number = DataStorage().data_banks_number
+            self.rar = DataStorage().data_rarefaction
+
 
         self.finished_output = []
         self.split_files_path = ''
@@ -24,52 +34,52 @@ class Splitter:
         self.split()
 
     def split(self):
-        self.__create_empty_hex_files()
-        self.__write_split_hex_files()
+        self.create_empty_hex_files()
+        self.write_split_hex_files()
+        log.info('All files were written successfully')
 
-    def __get_size_of_one_string(self):
+    def get_number_of_symbols_in_input_file_string(self):
         with open(self.input_file, 'r', encoding='UTF-8') as f:
             first_string = str(f.readline().replace('\n', ''))
-        return len(first_string) * SIZE_OF_ONE_HEX_CHARACTER_IN_BITS
+        return len(first_string)
 
-    def __get_number_of_items_in_string(self):
-        """
-        Get number of items from initial file
-        that will be put in one string in new file
-        :return:
-        """
+    def get_number_of_symbols_in_bank_string(self):
+        return int(self.bits_number / SIZE_OF_ONE_HEX_CHARACTER_IN_BITS)
 
-        bits = int(self.bits_number)
-        return int(bits / self.__get_size_of_one_string())
+    def make_result_list(self):
+        file_content = get_file_content(self.input_file)
+        result_list = []
 
-    def __set_finished_output(self):
-        file_output = get_file_content(self.input_file)
-        items_in_string = self.__get_number_of_items_in_string()
+        symbols_in_file_string = self.get_number_of_symbols_in_input_file_string()
+        symbols_in_bank_string = self.get_number_of_symbols_in_bank_string()
+        number_of_input_string_in_bank_string = int(symbols_in_bank_string / symbols_in_file_string)
 
+        temp_string = ''
         counter = 0
-        temp_str = ''
-        for index, item in enumerate(file_output):
-            if not counter <= items_in_string - 1:
-                self.finished_output.append(temp_str)
-                counter = 0
-                temp_str = ''
-            # Revers adding items in string
-            temp_str = item + temp_str
-            counter += 1
+        for index, string in enumerate(file_content):
+            if counter < number_of_input_string_in_bank_string:
+                temp_string = string + temp_string
+                counter += 1
+            else:
+                result_list.append(temp_string)
+                temp_string = string
+                counter = 1
+        print(result_list)
+        self.finished_output = result_list
 
-            if index == len(file_output) - 1:
-                self.finished_output.append(temp_str)
-
-    def __write_split_hex_files(self):
+    def write_split_hex_files(self):
         string_number = 0
-        self.__set_finished_output()
+        self.make_result_list()
+
         list_of_files = []
-        list_dir = os.listdir(self.split_files_path)
+        list_dir = os.listdir(self.splitted_files_directory)
         file_number = 0
 
+        # Open empty files for the writing
         for file in list_dir:
-            list_of_files.append(open(self.split_files_path+file, 'w', encoding='UTF-8'))
+            list_of_files.append(open(os.path.join(self.splitted_files_directory, file), 'w', encoding='UTF-8'))
 
+        # Put input info into banks
         for index, value in enumerate(self.finished_output):
             if not index % self.banks_number:
                 if not index:
@@ -80,41 +90,45 @@ class Splitter:
             file_number = index % self.banks_number
             list_of_files[file_number].write('@{0:<5X}{1}'.format(string_number, value) + '\n')
 
-        # Fill all banks
+        # Fill all banks by zero if need (all files must have the same number of string)
         if file_number != self.banks_number - 1:
-            for index in range(file_number+1, int(self.banks_number)):
-                zero_number = 2 * self.__get_number_of_items_in_string()
+            for index in range(file_number + 1, self.banks_number):
+                zero_number = self.get_number_of_symbols_in_bank_string()
                 value = '0' * zero_number
                 list_of_files[index].write('@{0:<5X}{1}'.format(string_number, value) + '\n')
 
         for file in list_of_files:
             file.close()
 
-    def __create_empty_hex_files(self):
+    def create_dir(self, path):
+        '''
+
+        Creates dir 'path' if 'path' don't exists. If 'path' exists it removes all files in.
+        '''
+
+        if not os.path.exists(path):
+            os.mkdir(path)
+            log.info('Dir {} was created'.format(path))
+        else:
+            for file in os.listdir(path):
+                file_path = os.path.join(path, file)
+                os.remove(file_path)
+                print('File {} was removed'.format(file_path))
+            log.info('Dir {} was cleared'.format(path))
+
+    def create_empty_hex_files(self):
         """
 
         Create (banks_number) empty hex files
         """
-
-        file_path_list = get_split_file_path(self.input_file)
-        if not os.path.exists((file_path_list['directory']+'\\Split hex files')):
-            os.mkdir(file_path_list['directory']+'\\Split hex files')
-            print('Dir was created')
-        else:
-            for file in os.listdir(file_path_list['directory']+'\\Split hex files'):
-                os.remove(file_path_list['directory']+'\\Split hex files\\{0}'.format(file))
+        self.create_dir(self.splitted_files_directory)
         for number in range(self.banks_number):
-            ext = file_path_list['extention'] if file_path_list['extention'] else self.default_ext
-            full_name = file_path_list['directory'] + \
-                        '\\Split hex files\\' +\
-                        file_path_list['file_name'] + \
-                        '_' + str(number) + \
-                        ext
-            with open(full_name, 'w') as f:
-                print('File {0} is created'.format(full_name))
-        print('All files was created')
-        self.split_files_path = file_path_list['directory']+'\\Split hex files\\'
+            full_banks_name = os.path.join(self.splitted_files_directory,
+                                           self.file_name + '_{}{}'.format(number, self.default_ext))
 
+            with open(full_banks_name, 'w'):
+                log.info('File {} was created'.format(full_banks_name))
+        log.info('All files was created.')
 
 if __name__ == '__main__':
     input_file = 'L:\\Документы\\Python_projects\\Practice\\test_files\\ER_IROM1'
