@@ -1,6 +1,7 @@
 from PyQt5 import uic
 from enum import Enum
 from PyQt5.QtWidgets import *
+from os import getcwd, path
 
 from StartPage import StartPage
 from SelectFilePage import SelectFilePage
@@ -16,7 +17,7 @@ from Helpers import singleton, MemoryType
 from Logger import log
 from DataStorage import DataStorage
 
-UI_PATH = 'ui\\main_1203.ui'
+UI_PATH = path.join(getcwd(), 'ui', 'main_1203.ui')
 
 
 class Page(Enum):
