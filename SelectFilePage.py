@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QFileDialog
 from re import findall
+from os.path import exists
 
 from Helpers import singleton, colors
 from Page import Page
@@ -44,7 +45,7 @@ class SelectFilePage(Page):
         self.ui.lineEdit_file.setStyleSheet("border: 2px solid {};".format(color))
 
     def check_path(self, path):
-        if path is None:
+        if path is None or not exists(path):
             return False
         pattern = r'.*/(ER_IROM1)$'
         return bool(findall(pattern, path))

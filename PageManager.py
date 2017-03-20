@@ -20,12 +20,6 @@ from DataStorage import DataStorage
 UI_PATH = path.join(getcwd(), 'ui', 'main_1203.ui')
 
 
-class Page(Enum):
-    page_1 = 1
-    page_2 = 2
-    page_3 = 3
-
-
 @singleton
 class PageManager(QMainWindow):
     def __init__(self):

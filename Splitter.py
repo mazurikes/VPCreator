@@ -48,6 +48,7 @@ class Splitter:
 
     def make_result_list(self):
         file_content = get_file_content(self.input_file)
+        print(len(file_content))
         result_list = []
 
         symbols_in_file_string = self.get_number_of_symbols_in_input_file_string()
@@ -108,13 +109,11 @@ class Splitter:
 
         if not os.path.exists(path):
             os.mkdir(path)
-            log.info('Dir {} was created'.format(path))
         else:
             for file in os.listdir(path):
                 file_path = os.path.join(path, file)
                 os.remove(file_path)
-                print('File {} was removed'.format(file_path))
-            log.info('Dir {} was cleared'.format(path))
+        log.info('Dir {} was cleared'.format(path))
 
     def create_empty_hex_files(self):
         """

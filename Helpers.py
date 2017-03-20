@@ -1,5 +1,6 @@
 import os
 from enum import Enum
+from cmath import log
 
 
 class MemoryType(Enum):
@@ -93,4 +94,48 @@ def hex_to_bin(collection):
 
 def create_and_open_file(name):
     return open(name, 'w')
+
+
+def get_global_adress_bits(file):
+    '''
+    Return number of symbol in adress that user has to enter in EccAdressPage
+    '''
+
+    try:
+        with open(file, 'r', encoding='utf-8') as f:
+            number_of_strings =  len(f.read())
+    except:
+        raise FileExistsError('File {} doesn\'t exist'.format(file))
+    else:
+        return 32 - log((number_of_strings/4), 2)
+
+
+def get_number_of_global_adress_symbols(file):
+    '''
+    It's the very very bad eximple of the function definition
+    '''
+
+    def nearest_top_two_power(number):
+        from cmath import log
+        power = int(log(number, 2).real) + 1
+        while power % 4 != 0:
+            power += 1
+        return power
+
+    try:
+        with open(file, 'r', encoding='utf-8') as f:
+            output = f.read()
+            number_of_strings = len(output.splitlines())
+    except:
+        raise FileExistsError('File {} doesn\'t exist'.format(file))
+    else:
+        # Количество бит в этом адресе - это ближайшее к степени двойки сверху число, которым можно закодировать
+        # все строки входного файла, учитывая, что тк в исходном файле у нас в строке 8 бит(2 hex), а почему-то
+        # длина всего адреса 32 бита, то число, которое введет
+        # пользователь = 32 - округлить_к_большей_степени_двойки(количество_слов_в_файле / 4)
+        adress_bits = 32 - nearest_top_two_power(number_of_strings / 4)
+        return int(adress_bits / 4)
+
+
+
 
