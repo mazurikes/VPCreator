@@ -1,4 +1,4 @@
-from Helpers import Singleton, get_split_file_path, MemoryType
+from Helpers import Singleton, get_split_file_path, MemoryType, BanksType
 from Logger import log
 
 
@@ -19,12 +19,7 @@ class DataStorage(metaclass=Singleton):
         # With ecc
         self.start_ecc_address = None
         self.file_with_ecc = None
-        self.banks_type = None
-
-        self.optional = (
-            self.start_ecc_address,
-            self.banks_type
-        )
+        self.banks_type = BanksType.Joint
 
     def reset(self):
         for var in self.__dict__:

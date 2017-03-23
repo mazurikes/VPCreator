@@ -13,7 +13,7 @@ from JointBanksPage import JointBanksPage
 from SeparatedBanksPage import SeparatedBanksPage
 from ResultPage import ResultPage
 
-from Helpers import singleton, MemoryType
+from Helpers import singleton, MemoryType, BanksType
 from Logger import log
 from DataStorage import DataStorage
 
@@ -92,7 +92,7 @@ class PageManager(QMainWindow):
         elif page == self.EccAdress:
             return self.BanksType
         elif page == self.BanksType:
-            return self.JointBanks if self.BanksType.type == self.BanksType.Type.Joint else self.SeparatedBanks
+            return self.SeparatedBanks if DataStorage().banks_type == BanksType.Separated else self.JointBanks
         elif page == self.JointBanks:
             return self.Result
         elif page == self.SeparatedBanks:

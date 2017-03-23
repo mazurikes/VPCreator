@@ -4,9 +4,15 @@ from cmath import log
 
 HEX_SYMBOL_SIZE_IN_BITS = 4
 
+
 class MemoryType(Enum):
     WithEcc = 0
     WithoutEcc = 1
+
+
+class BanksType(Enum):
+    Separated = 0
+    Joint = 1
 
 
 colors = {'wrong': 'red',
