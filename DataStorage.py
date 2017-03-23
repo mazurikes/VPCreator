@@ -16,7 +16,9 @@ class DataStorage(metaclass=Singleton):
 
         self.memory_type = MemoryType.WithoutEcc
 
+        # With ecc
         self.start_ecc_address = None
+        self.file_with_ecc = None
         self.banks_type = None
 
         self.optional = (

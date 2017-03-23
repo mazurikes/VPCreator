@@ -18,6 +18,7 @@ class EccAdressPage(Page):
     def prepare_to_open(self):
         self._adress = DataStorage().start_ecc_address
         self.adress_len = get_number_of_global_adress_symbols(DataStorage().file_path)
+        self.ui.lineEdit_ecc_adress.setToolTip('Enter {} hex numbers'.format(self.adress_len))
         super().prepare_to_open()
 
     def set_adress(self, adress):

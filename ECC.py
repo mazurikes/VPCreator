@@ -1,5 +1,7 @@
 from re import findall
-from Helpers import create_and_open_file, get_split_file_path, xor
+from Helpers import create_and_open_file, get_split_file_path, xor, hex_to_bin, bin_to_hex
+from DataStorage import DataStorage
+from os import path
 
 DEFAULT_ECC = 8
 
@@ -13,58 +15,10 @@ class ECC:
     def __init__(self, file):
         self.hex_file = file
         self.__ECC_file = None
-        self.length_of_string_for_ECC = 64
         self.ECC_size = DEFAULT_ECC
+        self.ecc_raw = self.get_ecc_and_din_indexes_from_verilog(VERILOG)
 
-        self.set_ECC_file_name()
-        self.create_bin_file()
-        self.create_ECC()
-
-    def create_bin_file(self):
-        from Helpers import get_split_file_path
-        from Helpers import hex_to_bin
-        split_file_path = get_split_file_path(self.hex_file)
-        self.input_file_bin = split_file_path['directory'] + '\\' + \
-                   split_file_path['file_name'] + \
-                   '_bin' + \
-                   split_file_path['extention']
-
-        bin_file = open(self.input_file_bin, 'w')
-
-        with open(self.hex_file, 'r', encoding='UTF-8') as f:
-            for line in f:
-                line = line.replace('\n', '')
-                new_line = hex_to_bin((line, ))[0]
-                print(line + ': ' + new_line)
-                bin_file.write(new_line + '\n')
-        bin_file.close()
-
-    def create_ECC(self):
-        file = create_and_open_file(self.ECC_file)
-        bit_string = ''
-
-        for line in file:
-            line.replace('\n', '')
-            line_length = len(line)
-
-            dif_with_size = self.length_of_string_for_ECC - len(bit_string)
-            if dif_with_size:
-                if line_length <= dif_with_size:
-                    bit_string = line + bit_string
-                else:
-                    bit_string = line[line_length - dif_with_size:] + bit_string
-                    file.write(bit_string + ': ' + str(self.count_ECC(bit_string)) + '\n')
-                    bit_string = line[0:line_length - dif_with_size]
-            else:
-                file.write(bit_string + ': ' + str(self.count_ECC(bit_string)) + '\n')
-                bit_string = line + bit_string
-        file.close()
-
-    def set_ECC_file_name(self):
-        file_path_list = get_split_file_path(self.hex_file)
-        # self.ECC_file = file_path_list['directory'] + '\\Split hex files\\ECC.vh'
-        import os
-        self.ECC_file = os.path.join(file_path_list['directory'], 'Split hex files', 'ECC.vh')
+        self.generate_ecc_and_write_to_file()
 
     def get_ecc_and_din_indexes_from_line(self, verilog_line):
 
@@ -88,20 +42,13 @@ class ECC:
 
         return result_dict
 
-    def calc_ecc(self, bool_list):
-        ECC = [None] * self.ECC_size
-        ecc_raw = self.get_ecc_and_din_indexes_from_verilog(VERILOG)
-        for i, item in ecc_raw.items():
-            ECC[i] = xor(bool_list, item)
-        return ECC
-
-
-    def count_ECC(self, bit_string):
-        DIN = bit_string[::-1]
+    def prepare_and_calc_ECC(self, bit_string):
+        DIN = bit_string[::-1]  # чтобы в массиве была нужная нумерация
         DIN_bool = [bool(int(item)) for item in DIN]
-        ECC_list = list(DIN_bool) # чтобы в массиве была нужная нумерация
+        ECC_list = list(DIN_bool)
+
         ECC = self.calc_ecc(ECC_list)
-        return ''.join(ECC)
+        return ECC
 
 
     @property
@@ -111,6 +58,59 @@ class ECC:
     @ECC_file.setter
     def ECC_file(self, new_file):
         self.__ECC_file = new_file
+
+
+##############################################################
+    def generate_ecc_and_write_to_file(self):
+        file_with_ecc_name = DataStorage().file_with_ecc = path.join(DataStorage().file_dir, 'ECC_from_'+DataStorage().file_name)
+        ecc_file = create_and_open_file(file_with_ecc_name)
+        global_adress = DataStorage().start_ecc_address
+        global_adress_bin = hex_to_bin(global_adress)
+        local_adress_len = 32 - len(str(global_adress_bin))
+
+        with open(DataStorage().file_path, 'r') as f:
+            local_adress = 0
+            counter = 0
+            temp_buffer = ''
+            for line in f:
+                if counter < 4:
+                    # Write new line in the start of buffer because it's more big bits
+                    temp_buffer = line.replace('\n', '').replace('\r', '') + temp_buffer
+                    counter += 1
+                else:
+                    local_adress_bin = '{0:0{1}b}'.format(local_adress, local_adress_len)
+                    string_for_ecc = global_adress_bin + local_adress_bin + hex_to_bin(temp_buffer)
+                    ecc_hex = self.prepare_and_calc_ECC(string_for_ecc)
+                    data_for_file = 'adress:{local} '\
+                                    'data:{data} '\
+                                    'ecc:{ecc}'.format(local=bin_to_hex(local_adress_bin, min_output_lenght=len(local_adress_bin)/4),
+                                             data=temp_buffer,
+                                             ecc=ecc_hex
+                                             )
+                    ecc_file.write(data_for_file + '\n')
+
+                    counter = 1
+                    temp_buffer = line.replace('\n', '').replace('\r', '')
+                    local_adress += 1
+        from Logger import log
+        log.info('ECC was created in {}'.format(file_with_ecc_name))
+        ecc_file.close()
+
+    def calc_ecc(self, bool_list):
+        if len(bool_list) != 64:
+            raise ValueError('Incorrect input data for calculation ecc!')
+        else:
+            ecc = [None] * self.ECC_size
+            for i, item in self.ecc_raw.items():
+                ecc[i] = xor(bool_list, item)
+
+            # prepare ecc to return
+            output = []
+            for item in ecc:
+                # remake bool_ecc to int_ecc, and int_ecc to str_ecc for concatination in output string
+                output.append(str(int(item)))
+            # change ecc order because hard digital man like a reverse order like [3:0] instead of [0:3]
+            return bin_to_hex(''.join(output)[::-1], min_output_lenght=len(output)/4)
 
 
 
@@ -142,6 +142,8 @@ assign ECC[6]=(^DIN[55:48])^DIN[1]^DIN[4]^DIN[7]^DIN[8]^DIN[11]^DIN[19]^DIN[27]^
 assign ECC[7]=(^DIN[63:56])^DIN[2]^DIN[5]^DIN[6]^DIN[9]^DIN[12]^DIN[16]^DIN[15]^DIN[19]^DIN[27]^DIN[35]^DIN[38]^DIN[39]^DIN[43]^DIN[44]^DIN[45]^DIN[48]^DIN[49]^DIN[50];
 
 '''
+
+
 
 
 

@@ -2,6 +2,7 @@ import os
 from enum import Enum
 from cmath import log
 
+HEX_SYMBOL_SIZE_IN_BITS = 4
 
 class MemoryType(Enum):
     WithEcc = 0
@@ -81,19 +82,49 @@ def get_file_content(file):
         raise FileExistsError('File {0} not found'.format(file))
 
 
-def hex_to_bin(collection):
+def hex_to_bin(hex_string):
+    '''
+    Translate hex string to bin string
+    :param hex_string:
+    :return:
+    '''
+
     new_collection = []
-    for item in collection:
+    for item in hex_string:
         new_item = ''
         for char in item:
             int_from_hex = int(char, 16)
             new_item += '{0:04b}'.format(int_from_hex)
         new_collection.append(new_item)
-    return new_collection
+    return ''.join(new_collection)
+
+
+def bin_to_hex(bin_string, min_output_lenght=None):
+    if len(bin_string) % 4 != 0:
+        added_zero = len(bin_string) % 4 if bin_string != '0' else 3
+        bin_string = '0' * added_zero + bin_string
+
+    hex_string = format(int(bin_string, 2), 'x').upper()
+
+    if min_output_lenght is not None and len(hex_string) < min_output_lenght:
+        min_output_lenght = int(min_output_lenght)
+        zero_ratio = min_output_lenght - len(hex_string)
+        hex_string = '0' * zero_ratio + hex_string
+    return hex_string
 
 
 def create_and_open_file(name):
-    return open(name, 'w')
+    return open(name, 'w', encoding='utf-8')
+
+
+def chunks(string, n):
+    'Divides string by n elements'
+
+    output = []
+    for i in range(0, len(string), n):
+        piece_of_list = string[i:i + n]
+        output.append(''.join([str(i) for i in piece_of_list]))
+    return output
 
 
 def get_global_adress_bits(file):

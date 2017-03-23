@@ -217,7 +217,7 @@ QPushButton::disabled{
        <enum>QFrame::Plain</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="welcome">
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -448,7 +448,7 @@ QPushButton::disabled{
       </widget>
       <widget class="QWidget" name="memory_type">
        <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,15,1">
-        <item row="1" column="0">
+        <item row="1" column="1">
          <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,1,1,4,1,4">
           <item row="1" column="0" colspan="2">
            <widget class="QLabel" name="label">
@@ -466,10 +466,9 @@ QPushButton::disabled{
           <item row="3" column="0" colspan="2">
            <widget class="QWidget" name="image_ecc_off" native="true">
             <property name="styleSheet">
-             <string notr="true">image: url(:/Image/pic/ecc_off.jpg);
+             <string notr="true">image: url(./pic/ecc_off.jpg);
 background-color: rgb(255, 255, 255);</string>
             </property>
-            <zorder>radioButton_ecc_off</zorder>
            </widget>
           </item>
           <item row="2" column="0" colspan="2">
@@ -492,14 +491,14 @@ background-color: rgb(255, 255, 255);</string>
           <item row="5" column="0" colspan="2">
            <widget class="QWidget" name="image_ecc_on" native="true">
             <property name="styleSheet">
-             <string notr="true">image: url(:/Image/pic/ecc_on.jpg);
+             <string notr="true">image: url(./pic/ecc_on.jpg);
 background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
+        <item row="2" column="1">
          <spacer name="verticalSpacer_30">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -512,7 +511,7 @@ background-color: rgb(255, 255, 255);</string>
           </property>
          </spacer>
         </item>
-        <item row="0" column="0">
+        <item row="0" column="1">
          <spacer name="verticalSpacer_29">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -521,6 +520,38 @@ background-color: rgb(255, 255, 255);</string>
            <size>
             <width>20</width>
             <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
            </size>
           </property>
          </spacer>
@@ -705,9 +736,28 @@ background-color: rgb(255, 255, 255);</string>
       <widget class="QWidget" name="banks_type">
        <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,6,0">
         <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,1,3,3">
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="1">
+         <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,1,3,3" columnstretch="0,0" columnminimumwidth="0,0">
           <item row="2" column="0">
            <widget class="QRadioButton" name="radioButton_separated">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Data+ECC</string>
             </property>
@@ -737,6 +787,12 @@ background-color: rgb(255, 255, 255);</string>
           </item>
           <item row="2" column="1">
            <widget class="QRadioButton" name="radioButton_together">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Divided data and ECC</string>
             </property>
@@ -745,20 +801,26 @@ background-color: rgb(255, 255, 255);</string>
           <item row="3" column="1">
            <widget class="QWidget" name="image_separated" native="true">
             <property name="styleSheet">
-             <string notr="true">image: url(:/Image/pic/separated_vert.jpg);</string>
+             <string notr="true">image: url(./pic/separated_vert.jpg);</string>
             </property>
            </widget>
           </item>
           <item row="3" column="0">
            <widget class="QWidget" name="image_together" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>180</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
-             <string notr="true">image: url(:/Image/pic/together_vert.jpg);</string>
+             <string notr="true">image: url(./pic/together_vert.jpg);</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
+        <item row="0" column="1">
          <spacer name="verticalSpacer_6">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -771,7 +833,7 @@ background-color: rgb(255, 255, 255);</string>
           </property>
          </spacer>
         </item>
-        <item row="2" column="0">
+        <item row="2" column="1">
          <spacer name="verticalSpacer_7">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -784,12 +846,25 @@ background-color: rgb(255, 255, 255);</string>
           </property>
          </spacer>
         </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="separated_storage">
        <layout class="QGridLayout" name="gridLayout_17">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="layout" rowstretch="0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="layout" rowstretch="0,0,0,0">
           <item row="1" column="0" colspan="2">
            <widget class="QLabel" name="label_7">
             <property name="text">
@@ -1046,7 +1121,7 @@ background-color: rgb(255, 255, 255);</string>
              <item row="6" column="0">
               <widget class="QWidget" name="image_right" native="true">
                <property name="styleSheet">
-                <string notr="true">image: url(:/Image/pic/right.jpg);
+                <string notr="true">image: url(./pic/right.jpg);
 background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
@@ -1061,7 +1136,7 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);
-image: url(:/Image/pic/left.jpg);</string>
+image: url(./pic/left.jpg);</string>
                </property>
               </widget>
              </item>
@@ -1200,6 +1275,7 @@ image: url(:/Image/pic/left.jpg);</string>
  </widget>
  <resources>
   <include location="../../Practice/ui/pic.qrc"/>
+  <include location="../../Practice/ui/res.qrc"/>
  </resources>
  <connections/>
  <designerdata>

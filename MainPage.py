@@ -12,7 +12,6 @@ colors = {'wrong': 'red',
           'empty': 'yellow',
           'correct': 'white'}
 
-
 @singleton
 class MainPage(Page):
 
