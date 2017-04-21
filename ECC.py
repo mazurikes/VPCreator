@@ -18,8 +18,6 @@ class ECC:
         self.ECC_size = DEFAULT_ECC
         self.ecc_raw = self.get_ecc_and_din_indexes_from_verilog(VERILOG)
 
-        self.generate_ecc_and_write_to_file()
-
     def get_ecc_and_din_indexes_from_line(self, verilog_line):
 
         ecc_index = findall('ECC\[(\d+)\]', verilog_line)[0]
@@ -62,13 +60,14 @@ class ECC:
 
 ##############################################################
     def generate_ecc_and_write_to_file(self):
-        file_with_ecc_name = DataStorage().file_with_ecc = path.join(DataStorage().file_dir, 'ECC_from_'+DataStorage().file_name)
+        file_with_ecc_name = DataStorage().file_with_ecc = path.join(DataStorage().programm_location,
+                                                                     'ECC_from_'+ DataStorage().file_name)
         ecc_file = create_and_open_file(file_with_ecc_name)
         global_adress = DataStorage().start_ecc_address
         global_adress_bin = hex_to_bin(global_adress)
         local_adress_len = 32 - len(str(global_adress_bin))
 
-        with open(DataStorage().file_path, 'r') as f:
+        with open(self.hex_file, 'r') as f:
             local_adress = 0
             counter = 0
             temp_buffer = ''

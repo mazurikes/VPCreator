@@ -46,11 +46,12 @@
 #centralwidget{
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0 #367caf,  stop: 1.0 rgb(72, 168, 236));
+
 }
 
 QLabel, QRadioButton{
 	font: 13pt bold &quot;Traditional Arabic&quot;;
-	color: rgb(252, 252, 244)
+	color: rgb(252, 252, 244);
 }
 
 #pushButton_create::disabled{
@@ -63,7 +64,7 @@ QPushButton{
 	 background-color: rgb(236, 224, 208);
 	 color: rgb(23, 54, 76);
 	 padding: 5px;
-	 font: 13pt  &quot;Traditional Arabic&quot;;
+	font: 13pt bold &quot;Traditional Arabic&quot;;
 }
 
 
@@ -79,6 +80,7 @@ QGroupBox {
     border: 2px solid rgb(236, 224, 208);
     border-radius: 5px;
     margin-top: 1ex; /* leave space at the top for the title */
+background-color: rgb(85, 170, 255);
 }
 
 QCheckBox{
@@ -127,7 +129,14 @@ QPushButton::disabled{
 	background-color:rgb(197, 219, 248);
 }
 
-</string>
+QRadioButton::indicator::checked{
+	image: url(./pic/radioButton.png);
+}
+
+QLineEdit{
+	
+	font: 12pt &quot;Calibri&quot;;
+}</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="4" column="0">
@@ -135,10 +144,13 @@ QPushButton::disabled{
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>20</width>
-        <height>40</height>
+        <width>15</width>
+        <height>30</height>
        </size>
       </property>
      </spacer>
@@ -155,6 +167,9 @@ QPushButton::disabled{
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -178,12 +193,34 @@ QPushButton::disabled{
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer_19">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton_next">
         <property name="minimumSize">
          <size>
           <width>70</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>12 Traditional Arabic</family>
+          <pointsize>13</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="text">
          <string>Next</string>
@@ -194,6 +231,9 @@ QPushButton::disabled{
        <spacer name="horizontalSpacer_4">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -209,6 +249,9 @@ QPushButton::disabled{
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="autoFillBackground">
        <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -237,7 +280,7 @@ QPushButton::disabled{
         <item alignment="Qt::AlignHCenter">
          <widget class="QLabel" name="label_welcome">
           <property name="text">
-           <string>Welcome to Hex Splitter!</string>
+           <string>Welcome to VPCreator!</string>
           </property>
          </widget>
         </item>
@@ -378,6 +421,15 @@ QPushButton::disabled{
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_file">
+              <property name="font">
+               <font>
+                <family>Calibri</family>
+                <pointsize>12</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
               <property name="toolTip">
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose ER_IROM1 file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
@@ -399,7 +451,7 @@ QPushButton::disabled{
               </property>
               <property name="font">
                <font>
-                <family>Traditional Arabic</family>
+                <family>12 Traditional Arabic</family>
                 <pointsize>13</pointsize>
                 <weight>50</weight>
                 <italic>false</italic>
@@ -422,6 +474,9 @@ QPushButton::disabled{
          <spacer name="verticalSpacer_14">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -530,7 +585,7 @@ background-color: rgb(255, 255, 255);</string>
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Minimum</enum>
+           <enum>QSizePolicy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -546,7 +601,7 @@ background-color: rgb(255, 255, 255);</string>
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Minimum</enum>
+           <enum>QSizePolicy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -560,7 +615,59 @@ background-color: rgb(255, 255, 255);</string>
       </widget>
       <widget class="QWidget" name="ecc_off">
        <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0">
-        <item row="3" column="0">
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_21">
+          <property name="text">
+           <string>Enter Information about Data banks</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="1">
+         <spacer name="verticalSpacer_25">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="1">
+         <spacer name="verticalSpacer_26">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="1">
          <widget class="QWidget" name="data_5" native="true">
           <property name="autoFillBackground">
            <bool>false</bool>
@@ -599,57 +706,47 @@ background-color: rgb(255, 255, 255);</string>
            <item row="1" column="1" rowspan="2">
             <widget class="QComboBox" name="comboBox_bits"/>
            </item>
+           <item row="4" column="1">
+            <widget class="QSpinBox" name="spinBox_lenght"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_lenght">
+             <property name="text">
+              <string>Lenght</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_21">
-          <property name="text">
-           <string>Enter Information about Data banks</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <spacer name="verticalSpacer_5">
+        <item row="3" column="0">
+         <spacer name="horizontalSpacer_15">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="0">
-         <spacer name="verticalSpacer_25">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="0">
-         <spacer name="verticalSpacer_26">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Minimum</enum>
+           <enum>QSizePolicy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>15</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="2">
+         <spacer name="horizontalSpacer_16">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>15</width>
+            <height>20</height>
            </size>
           </property>
          </spacer>
@@ -662,8 +759,29 @@ background-color: rgb(255, 255, 255);</string>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="2" column="1">
            <widget class="QLineEdit" name="lineEdit_ecc_adress">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
+            </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+            <property name="cursorMoveStyle">
+             <enum>Qt::VisualMoveStyle</enum>
             </property>
            </widget>
           </item>
@@ -710,10 +828,13 @@ background-color: rgb(255, 255, 255);</string>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>150</height>
            </size>
           </property>
          </spacer>
@@ -723,10 +844,13 @@ background-color: rgb(255, 255, 255);</string>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>200</height>
            </size>
           </property>
          </spacer>
@@ -740,9 +864,12 @@ background-color: rgb(255, 255, 255);</string>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>15</width>
             <height>20</height>
            </size>
           </property>
@@ -778,7 +905,7 @@ background-color: rgb(255, 255, 255);</string>
              <enum>Qt::LeftToRight</enum>
             </property>
             <property name="text">
-             <string>Select type of memory banks</string>
+             <string>Select Ecc location in the bank</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -851,9 +978,12 @@ background-color: rgb(255, 255, 255);</string>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>15</width>
             <height>20</height>
            </size>
           </property>
@@ -863,8 +993,8 @@ background-color: rgb(255, 255, 255);</string>
       </widget>
       <widget class="QWidget" name="separated_storage">
        <layout class="QGridLayout" name="gridLayout_17">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="layout" rowstretch="0,0,0,0">
+        <item row="0" column="1">
+         <layout class="QGridLayout" name="layout" rowstretch="0,0,0,0,0">
           <item row="1" column="0" colspan="2">
            <widget class="QLabel" name="label_7">
             <property name="text">
@@ -897,7 +1027,37 @@ background-color: rgb(255, 255, 255);</string>
              <string notr="true"/>
             </property>
             <layout class="QGridLayout" name="gridLayout_18">
-             <item row="0" column="0">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_data_num">
+               <property name="text">
+                <string>Number of </string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_data_bits">
+               <property name="text">
+                <string>Bits</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_rar">
+               <property name="text">
+                <string>Rarefaction</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QComboBox" name="comboBox_data_bits"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QSpinBox" name="spinBox_data_num"/>
+             </item>
+             <item row="3" column="2">
+              <widget class="QComboBox" name="comboBox_data_rar"/>
+             </item>
+             <item row="0" column="0" colspan="3">
               <widget class="QLabel" name="label_data">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -908,42 +1068,25 @@ background-color: rgb(255, 255, 255);</string>
                <property name="text">
                 <string>Data banks</string>
                </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_data_num">
-               <property name="text">
-                <string>Number of </string>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QSpinBox" name="spinBox_data_num"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_data_bits">
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_data_lenght">
                <property name="text">
-                <string>Bits</string>
+                <string>Lenght</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QSpinBox" name="spinBox_data_bits"/>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_rar">
-               <property name="text">
-                <string>Rarefaction</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QComboBox" name="comboBox_data_rar"/>
+             <item row="4" column="2">
+              <widget class="QSpinBox" name="spinBox_data_lenght"/>
              </item>
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
+          <item row="4" column="0" colspan="2">
            <widget class="QWidget" name="ecc" native="true">
             <property name="minimumSize">
              <size>
@@ -956,19 +1099,6 @@ background-color: rgb(255, 255, 255);</string>
               <widget class="QLabel" name="label_ecc_bits">
                <property name="text">
                 <string>Bits</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_ecc">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>ECC banks</string>
                </property>
               </widget>
              </item>
@@ -986,21 +1116,47 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="2" column="2">
+              <widget class="QComboBox" name="comboBox_ecc_bits"/>
+             </item>
+             <item row="1" column="2">
               <widget class="QSpinBox" name="spinBox_ecc_num"/>
              </item>
-             <item row="2" column="1">
-              <widget class="QSpinBox" name="spinBox_ecc_bits"/>
-             </item>
-             <item row="3" column="1">
+             <item row="3" column="2">
               <widget class="QComboBox" name="comboBox_ecc_rar"/>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_ecc">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>ECC banks</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_ecc_lenght">
+               <property name="text">
+                <string>Lenght</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QSpinBox" name="spinBox_data_lenght_2"/>
              </item>
             </layout>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
+        <item row="2" column="1">
          <spacer name="verticalSpacer_8">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -1013,7 +1169,7 @@ background-color: rgb(255, 255, 255);</string>
           </property>
          </spacer>
         </item>
-        <item row="1" column="0">
+        <item row="1" column="1">
          <spacer name="verticalSpacer_11">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -1029,12 +1185,44 @@ background-color: rgb(255, 255, 255);</string>
           </property>
          </spacer>
         </item>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>15</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="2">
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>15</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="together_storage">
-       <layout class="QGridLayout" name="gridLayout_21" rowstretch="1,20,1">
-        <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout_20" rowstretch="0,0,2,10">
+       <layout class="QGridLayout" name="gridLayout_21" rowstretch="1,0,0">
+        <item row="1" column="1">
+         <layout class="QGridLayout" name="gridLayout_20" rowstretch="0,0,0,0">
           <item row="2" column="0">
            <widget class="QLabel" name="label_8">
             <property name="text">
@@ -1053,25 +1241,9 @@ background-color: rgb(255, 255, 255);</string>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
-            <layout class="QGridLayout" name="gridLayout_19" rowstretch="1,1,1,1,1,1,5">
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="spinBox_data_num_t"/>
-             </item>
-             <item row="3" column="1">
-              <widget class="QComboBox" name="comboBox_rar_t"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSpinBox" name="spinBox_data_bits_t"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_data_bits_t">
-               <property name="text">
-                <string>Bits of banks</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QRadioButton" name="radioButton_right">
+            <layout class="QGridLayout" name="gridLayout_19" rowstretch="1,1,1,1,1,1,5,5,0">
+             <item row="6" column="3" colspan="2">
+              <widget class="QRadioButton" name="radioButton_left">
                <property name="text">
                 <string>Left</string>
                </property>
@@ -1080,22 +1252,65 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QSpinBox" name="spinBox_ecc_bits_t">
-               <property name="enabled">
-                <bool>false</bool>
+             <item row="4" column="3" colspan="2">
+              <widget class="QSpinBox" name="spinBox_lenght_t"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="label_data_bits_t">
+               <property name="text">
+                <string>Bits of banks</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="3" column="1">
               <widget class="QLabel" name="label_rar_t">
                <property name="text">
                 <string>Rarefaction</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
-              <widget class="QRadioButton" name="radioButton_left">
+             <item row="2" column="1">
+              <widget class="QLabel" name="label_ecc_bits_t">
+               <property name="text">
+                <string>Bits of ECC</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_data_num_t">
+               <property name="text">
+                <string>Number of banks</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3" colspan="2">
+              <widget class="QComboBox" name="comboBox_bits_j"/>
+             </item>
+             <item row="0" column="3" colspan="2">
+              <widget class="QSpinBox" name="spinBox_num_j">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3" colspan="2">
+              <widget class="QSpinBox" name="spinBox_bits_j">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="value">
+                <number>8</number>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3" colspan="2">
+              <widget class="QComboBox" name="comboBox_rar_j"/>
+             </item>
+             <item row="6" column="1">
+              <widget class="QRadioButton" name="radioButton_right">
                <property name="text">
                 <string>Right</string>
                </property>
@@ -1104,21 +1319,21 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_ecc_bits_t">
+             <item row="4" column="1">
+              <widget class="QLabel" name="label_lenght_t">
                <property name="text">
-                <string>Bits of ECC</string>
+                <string>Lenght</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_data_num_t">
+             <item row="5" column="1" colspan="4" alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_10">
                <property name="text">
-                <string>Number of banks</string>
+                <string>ECC location</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
+             <item row="7" column="1" rowspan="2">
               <widget class="QWidget" name="image_right" native="true">
                <property name="styleSheet">
                 <string notr="true">image: url(./pic/right.jpg);
@@ -1126,7 +1341,7 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
+             <item row="7" column="3" rowspan="2" colspan="2">
               <widget class="QWidget" name="image_left" native="true">
                <property name="minimumSize">
                 <size>
@@ -1140,22 +1355,18 @@ image: url(./pic/left.jpg);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0" colspan="2">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>ECC location</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
+        <item row="0" column="1">
          <spacer name="verticalSpacer_9">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -1165,18 +1376,214 @@ image: url(./pic/left.jpg);</string>
           </property>
          </spacer>
         </item>
-        <item row="2" column="0">
+        <item row="2" column="1">
          <spacer name="verticalSpacer_10">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>10</height>
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer_13">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>15</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_14">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>15</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="destination_directory">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_select_file_2">
+            <property name="text">
+             <string>Select directory for new files</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <property name="spacing">
+             <number>7</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_file_2">
+              <property name="font">
+               <font>
+                <family>12 Traditional Arabic</family>
+                <pointsize>13</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Dir</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_dir">
+              <property name="font">
+               <font>
+                <family>Calibri</family>
+                <pointsize>12</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose ER_IROM1 file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_open_dir">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>12 Traditional Arabic</family>
+                <pointsize>13</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это кнопка&lt;/p&gt;&lt;/body&gt;&lt;/hrtml&gt;</string>
+              </property>
+              <property name="text">
+               <string>Open</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_12">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1261,6 +1668,16 @@ image: url(./pic/left.jpg);</string>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>21</height>
+    </rect>
+   </property>
   </widget>
   <action name="actionOpen_hex_file">
    <property name="text">

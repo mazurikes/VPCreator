@@ -1,5 +1,4 @@
 from PyQt5 import uic
-from enum import Enum
 from PyQt5.QtWidgets import *
 from os import getcwd, path
 
@@ -11,6 +10,7 @@ from EccAdressPage import EccAdressPage
 from BanksTypePage import BanksTypePage
 from JointBanksPage import JointBanksPage
 from SeparatedBanksPage import SeparatedBanksPage
+from DestinationFolderPage import DestinationFolderPage
 from ResultPage import ResultPage
 
 from Helpers import singleton, MemoryType, BanksType
@@ -38,6 +38,7 @@ class PageManager(QMainWindow):
             self.BanksType,
             self.SeparatedBanks,
             self.JointBanks,
+            self.DestinationFolder,
             self.Result
         )
         self.connect_signals()
@@ -57,6 +58,7 @@ class PageManager(QMainWindow):
         self.BanksType = BanksTypePage(self.ui)
         self.JointBanks = JointBanksPage(self.ui)
         self.SeparatedBanks = SeparatedBanksPage(self.ui)
+        self.DestinationFolder = DestinationFolderPage(self.ui)
         self.Result = ResultPage(self.ui)
 
     def connect_signals(self):
@@ -88,14 +90,16 @@ class PageManager(QMainWindow):
         elif page == self.MemoryType:
             return self.WithoutECC if DataStorage().memory_type == MemoryType.WithoutEcc else self.EccAdress
         elif page == self.WithoutECC:
-            return self.Result
+            return self.DestinationFolder
         elif page == self.EccAdress:
             return self.BanksType
         elif page == self.BanksType:
             return self.SeparatedBanks if DataStorage().banks_type == BanksType.Separated else self.JointBanks
         elif page == self.JointBanks:
-            return self.Result
+            return self.DestinationFolder
         elif page == self.SeparatedBanks:
+            return self.DestinationFolder
+        elif page == self.DestinationFolder:
             return self.Result
         elif page == self.Result:
             return self.SelectFile

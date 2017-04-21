@@ -11,7 +11,7 @@ class WithoutEccPage(Page):
 
     def connect_signals(self):
         self.ui.pushButton_next.setEnabled(True)
-        self.ui.pushButton_next.clicked.connect(self.create_banks)
+        self.ui.pushButton_next.clicked.connect(lambda: self.open_next.emit())
 
         self.ui.spinBox_num.valueChanged.connect(self.set_num)
         self.ui.comboBox_bits.currentIndexChanged.connect(self.set_bits)
@@ -36,16 +36,6 @@ class WithoutEccPage(Page):
         self.ui.comboBox_rar.addItem(str(1), 1)
         if self.current_amount != 1:
             self.ui.comboBox_rar.addItem(str(self.current_amount), self.current_amount)
-
-    def create_banks(self):
-        if DataStorage().data_banks_number and DataStorage().data_bits and DataStorage().data_rarefaction:
-            try:
-                Splitter()
-                is_good_result = True
-            except Exception as e:
-                from Logger import log
-                log.error(str(e))
-                is_good_result = False
 
     def set_num(self, value):
         self.current_amount = value

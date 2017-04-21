@@ -10,10 +10,13 @@ class Page(QObject):
         super().__init__()
         self.ui = ui
 
-        self.connect_signals()
-
     def prepare_to_open(self):
         self.prepare_ui()
+        try:
+            self.ui.pushButton_next.disconnect()
+        except:
+            pass
+        self.connect_signals()
 
     def connect_signals(self):
         pass

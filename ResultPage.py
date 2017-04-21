@@ -1,43 +1,31 @@
 from Page import Page
-# from HexSplitter import get_split_file_path
+from DataStorage import DataStorage
 
 
 class ResultPage(Page):
     pass
-    #
-    # def __init__(self, ui):
-    #     super().__init__()
-    #
-    #     self.ui = ui
-    #     self.connect_signals()
-    #
-    # def connect_signals(self):
-    #     self.ui.pushButton_open_folder.clicked.connect(self.open_split_files_folder)
-    #     self.ui.pushButton_choose_other.clicked.connect(self.open_main)
-    #
-    # def late_init(self, split_files_path):
-    #
-    #     self.split_files_path = split_files_path
-    #     self.path_dict = get_split_file_path(self.split_files_path)
-    #
-    #     self.set_label()
-    #
-    # def set_label(self):
-    #     if self.path_dict:
-    #         self.ui.label_process_info.setText('{} was splitted.'
-    #                                            '\nClick button to open folder with files'.
-    #                                            format(self.path_dict['file_name']))
-    #
-    # def open_split_files_folder(self):
-    #     path = str(self.path_dict['directory']).replace('/', '\\')
-    #     command = 'explorer /open,"{}"'.format(path)
-    #     print(command)
-    #     from subprocess import Popen
-    #     Popen(command)
-    #
-    # def open_main(self):
-    #     self.reset_info()
-    #     self.open_page.emit('Main')
-    #
-    # def reset_info(self):
-    #     self.reset.emit()
+
+    def __init__(self, ui):
+        super().__init__(ui)
+
+    def connect_signals(self):
+        self.ui.pushButton_open_folder.clicked.connect(self.open_split_files_folder)
+        self.ui.pushButton_choose_other.clicked.connect(lambda: self.open_next.emit())
+
+    def prepare_ui(self):
+        super().prepare_ui()
+        self.set_label()
+        self.ui.pushButton_next.setVisible(False)
+        self.ui.pushButton_previous.setVisible(False)
+
+    def set_label(self):
+        if DataStorage().destination_folder:
+            self.ui.label_result.setText('{} \nwas splitted.'
+                                               '\nClick button to open folder with files'.
+                                               format(DataStorage().file_path))
+
+    def open_split_files_folder(self):
+        path = str(DataStorage().splitted_files_directory).replace('/', '\\')
+        command = 'explorer /open,"{}"'.format(path)
+        from subprocess import Popen
+        Popen(command)

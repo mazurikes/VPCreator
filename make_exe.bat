@@ -1,0 +1,1 @@
+pyinstaller --onefile l:\VPCreator\__main__.py --name VPCreator

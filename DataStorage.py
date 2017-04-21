@@ -1,18 +1,27 @@
-from Helpers import Singleton, get_split_file_path, MemoryType, BanksType
+import os
+from Helpers import Singleton, get_split_file_path, MemoryType, BanksType, EccLocation
 from Logger import log
 
 
 class DataStorage(metaclass=Singleton):
     def __init__(self):
+        self.programm_location = os.path.dirname(os.path.realpath(__file__))
         self.__file_path = None
+        self.destination_folder = None
         self.file_dir = None
         self.file_name = None
         self.file_extension = None
+        self.splitted_files_directory = None
 
-        # Without ecc
-        self.data_banks_number = None
-        self.data_bits = None
-        self.data_rarefaction = None
+        # Without ecc or separated banks
+        self.data_banks_number = 1
+        self.data_bits = 8
+        self.data_rarefaction = 1
+
+        # if BanksType Separated
+        self.ecc_banks_number = 1
+        self.ecc_bits = 8
+        self.ecc_rarefaction = 1
 
         self.memory_type = MemoryType.WithoutEcc
 
@@ -20,6 +29,17 @@ class DataStorage(metaclass=Singleton):
         self.start_ecc_address = None
         self.file_with_ecc = None
         self.banks_type = BanksType.Joint
+
+        # if BanksType Joint
+        self.joint_banks_number = 1
+        self.joint_data_bits = 8
+        self.joint_data_rarefaction = 1
+        self.ecc_location = EccLocation.Right
+        # joint = (self.joint_banks_number,
+        #          self.joint_data_bits - self.ecc_bits,
+        #          self.joint_data_rarefaction,
+        #          self.ecc_location
+        #          )
 
     def reset(self):
         for var in self.__dict__:

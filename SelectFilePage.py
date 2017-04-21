@@ -7,9 +7,6 @@ from Page import Page
 from DataStorage import DataStorage
 
 
-DEFAULT_DIR = 'l:/Документы/test_files'
-
-
 class SelectFilePage(Page):
 
     def __init__(self, ui):
@@ -20,14 +17,16 @@ class SelectFilePage(Page):
     def connect_signals(self):
         self.ui.pushButton_open.clicked.connect(self.select_file)
         self.ui.lineEdit_file.textChanged.connect(self.set_path)
+        self.ui.pushButton_next.clicked.connect(lambda: self.open_next.emit())
 
     def prepare_to_open(self):
         super().prepare_to_open()
-        self.ui.lineEdit_file.setText('L:/Документы/test_files/ER_IROM1')
         self.ui.pushButton_next.setEnabled(bool(self._file_path))
+        self.ui.pushButton_next.setText('Next')
+        self.ui.pushButton_previous.setVisible(False)
 
     def select_file(self):
-        file_path = QFileDialog.getOpenFileName(None, 'Open ER_IROM1 file', DEFAULT_DIR)[0]
+        file_path = QFileDialog.getOpenFileName(None, 'Open ER_IROM1 file', DataStorage().programm_location)[0]
         if file_path:
             self.ui.lineEdit_file.setText(file_path)
 
@@ -47,8 +46,9 @@ class SelectFilePage(Page):
     def check_path(self, path):
         if path is None or not exists(path):
             return False
-        pattern = r'.*/(ER_IROM1)$'
-        return bool(findall(pattern, path))
+        # pattern = r'.*/(ER_IROM1)$'
+        # return bool(findall(pattern, path))
+        return True
 
     @property
     def file_path(self):

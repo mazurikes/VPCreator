@@ -12,7 +12,7 @@ class EccAdressPage(Page):
         self.ui.pushButton_next.setEnabled(bool(self._adress))
 
     def connect_signals(self):
-        super().connect_signals()
+        self.ui.pushButton_next.clicked.connect(lambda: self.open_next.emit())
         self.ui.lineEdit_ecc_adress.textChanged.connect(self.set_adress)
 
     def prepare_to_open(self):

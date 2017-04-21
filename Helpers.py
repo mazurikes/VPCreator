@@ -1,6 +1,7 @@
 import os
 from enum import Enum
 from cmath import log
+from re import search
 
 HEX_SYMBOL_SIZE_IN_BITS = 4
 
@@ -13,6 +14,11 @@ class MemoryType(Enum):
 class BanksType(Enum):
     Separated = 0
     Joint = 1
+
+
+class EccLocation(Enum):
+    Right = 0
+    Left = 1
 
 
 colors = {'wrong': 'red',
@@ -83,6 +89,15 @@ def get_file_content(file):
     if os.path.isfile(file):
         with open(file, 'r', encoding='UTF-8') as f:
             file_output = [line.replace('\n', '') for line in f]
+        return file_output
+    else:
+        raise FileExistsError('File {0} not found'.format(file))
+
+
+def get_ecc(file):
+    if os.path.isfile(file):
+        with open(file, 'r', encoding='UTF-8') as f:
+            file_output = [search(r'ecc:(\w+)', line.replace('\n', '')).group(1) for line in f]
         return file_output
     else:
         raise FileExistsError('File {0} not found'.format(file))
